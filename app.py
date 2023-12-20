@@ -3,7 +3,7 @@ import pickle
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 
-with open("random_model.pkl", "rb") as file:
+with open("model.pkl", "rb") as file:
     model = pickle.load(file)
 
 
