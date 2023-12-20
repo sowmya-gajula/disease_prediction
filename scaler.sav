@@ -1,0 +1,9 @@
+scaler.fit(x_train)
+
+# Scale the input features
+scaled_input_data = scaler.transform(input_data)
+
+# Make predictions using the model
+prediction = model.predict(scaled_input_data)[0]
+
+# Rest of your code for displaying the prediction
