@@ -5,7 +5,8 @@ from sklearn.preprocessing import MinMaxScaler
 
 with open("model.sav", "rb") as file:
     random_model = pickle.load(file)
-
+with open("scaler.sav", "rb") as file:
+    scaler = pickle.load(file)
 
 scaler = MinMaxScaler()
 
