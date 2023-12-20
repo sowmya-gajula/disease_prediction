@@ -1,7 +1,7 @@
 import streamlit as st
 import pickle
 import pandas as pd
-from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
 
 # Load the model
 with open("model.sav", "rb") as file:
@@ -25,20 +25,14 @@ input_data = pd.DataFrame({
     'HeartRate': [heart_rate]
 })
 
-# Check if the model is a pipeline
-if isinstance(model, Pipeline):
-    # Use the same scaler object from the pipeline
-    try:
-        scaler = model.named_steps['scaler']  # Adjust based on the actual name used in your pipeline
-    except AttributeError:
-        st.error("Error: 'scaler' not found in the pipeline. Check the pipeline steps.")
-        st.stop()
+# Check if the scaler is a StandardScaler or MinMaxScaler
+if isinstance(scaler, (StandardScaler, MinMaxScaler)):
+    # If the scaler is a StandardScaler or MinMaxScaler, apply the transform method
+    scaled_input_data = scaler.transform(input_data)
 else:
-    # If the model is not a pipeline, assume the scaler is a separate object
-    scaler = model
-
-# Scale the input features
-scaled_input_data = scaler.transform(input_data)
+    # Handle other types of scalers or custom scaling logic
+    st.error("Error: Unsupported scaler type. Check the scaler used during training.")
+    st.stop()
 
 # Make predictions using the model
 prediction = model.predict(scaled_input_data)[0]
