@@ -3,11 +3,9 @@ import pickle
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 
-with open("svc_model.pkl", "rb") as file:
+with open("random_model.pkl", "rb") as file:
     model = pickle.load(file)
 
-with open("tfidf_vectorizer.pkl", "rb") as file:
-    vectorizer = pickle.load(file)
 
 scaler = MinMaxScaler()
 
