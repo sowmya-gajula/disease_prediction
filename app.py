@@ -25,6 +25,9 @@ input_data = pd.DataFrame({
     'HeartRate': [heart_rate]
 })
 
+# Retrieve the scaler from the model (assuming the scaler was saved as 'scaler' in the model)
+scaler = model.named_steps.get('scaler', None)
+
 # Check if the scaler is a StandardScaler or MinMaxScaler
 if isinstance(scaler, (StandardScaler, MinMaxScaler)):
     # If the scaler is a StandardScaler or MinMaxScaler, apply the transform method
