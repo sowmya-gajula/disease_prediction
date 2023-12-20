@@ -1,6 +1,7 @@
 import streamlit as st
 import pickle
 import pandas as pd
+from sklearn.pipeline import Pipeline
 
 # Load the model
 with open("model.sav", "rb") as file:
@@ -24,8 +25,17 @@ input_data = pd.DataFrame({
     'HeartRate': [heart_rate]
 })
 
-# Use the same scaler object from the model
-scaler = model.named_steps['scaler']  # Adjust based on the actual name used in your pipeline
+# Check if the model is a pipeline
+if isinstance(model, Pipeline):
+    # Use the same scaler object from the pipeline
+    try:
+        scaler = model.named_steps['scaler']  # Adjust based on the actual name used in your pipeline
+    except AttributeError:
+        st.error("Error: 'scaler' not found in the pipeline. Check the pipeline steps.")
+        st.stop()
+else:
+    # If the model is not a pipeline, assume the scaler is a separate object
+    scaler = model
 
 # Scale the input features
 scaled_input_data = scaler.transform(input_data)
